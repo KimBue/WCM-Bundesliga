@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  LocationID: 1
+  LocationCity: MyString
+  LocationStadium: MyString
+
+two:
+  LocationID: 1
+  LocationCity: MyString
+  LocationStadium: MyString

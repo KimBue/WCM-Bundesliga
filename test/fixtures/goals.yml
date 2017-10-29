@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  GoalID: 1
+  GoalGetterID: 1
+  GoalGetterName: MyString
+  ISOvertime: false
+  IsOwnGoal: false
+  IsPenalty: false
+  MatchMinute: 1
+  ScoreTeam1: 1
+  ScoreTeam2: 1
+
+two:
+  GoalID: 1
+  GoalGetterID: 1
+  GoalGetterName: MyString
+  ISOvertime: false
+  IsOwnGoal: false
+  IsPenalty: false
+  MatchMinute: 1
+  ScoreTeam1: 1
+  ScoreTeam2: 1

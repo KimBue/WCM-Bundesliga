@@ -1,0 +1,18 @@
+<h1>Wir haben OpenLiga-Daten zu folgenden Ligen:</h1>
+
+<table>
+  <tr>
+    <th>Liga-Id</th>
+    <th>Liga-Name</th>
+    <th>geschossene Tore</th>
+  </tr>
+
+  <% @leagues.sort.each do |l| %>
+    <tr>
+      <td><%= l.league_id %></td>
+      <td><%= l.league_name %></td>
+      <td><%= @league_goals.select('goal_id').where(league_id: l.league_id).count %></td>
+      <td><%= button_to 'Details', {:controller => 'leagues', :action => 'create'} %></td>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  MatchID: 1
+  MatchDateTime: 2017-10-26 13:21:29
+  MatchDateTimeUTC: 2017-10-26 13:21:29
+  LastUpdateDateTime: 2017-10-26 13:21:29
+  MatchIsFinished: false
+  NumberOfViewers: 1
+  TimeZoneID: MyString
+  Group: one
+  League: one
+
+two:
+  MatchID: 1
+  MatchDateTime: 2017-10-26 13:21:29
+  MatchDateTimeUTC: 2017-10-26 13:21:29
+  LastUpdateDateTime: 2017-10-26 13:21:29
+  MatchIsFinished: false
+  NumberOfViewers: 1
+  TimeZoneID: MyString
+  Group: two
+  League: two

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ResultID: 1
+  ResultName: MyString
+  PointsTeam1: 1
+  PointsTeam2: 1
+  ResultOrderID: 1
+  ResultTypeID: 1
+  ResultDescription: MyText
+
+two:
+  ResultID: 1
+  ResultName: MyString
+  PointsTeam1: 1
+  PointsTeam2: 1
+  ResultOrderID: 1
+  ResultTypeID: 1
+  ResultDescription: MyText
