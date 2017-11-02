@@ -1,5 +1,21 @@
 <h1>Wissens- und Content-Management</h1>
-<h2>Willkommen zum Bundesliga-Projekt</h2>
-<p>
-  <%= link_to 'Liga wählen', controller: 'leagues' %>
-</p>
+<h2>Wähle die gewünschte Sportart</h2>
+
+<table>
+  <tr>
+    <th>Sport-ID</th>
+    <th>Bezeichnung</th>
+  </tr>
+  <% @avail_sports.each do |s| %>
+      <tr>
+        <% if s[:sports_id] == 1.to_s %>
+          <td><%= s[:sports_id] %></td>
+          <td>
+            <%= link_to s[:sports_name].to_s, {:controller => 'leagues',
+                                                 :sports_id => s[:sports_id],
+                                                 :sports_name => s[:sports_name]} %>
+          </td>
+        <% end %>
+      </tr>
+  <% end %>
+</table>

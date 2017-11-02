@@ -1,15 +1,15 @@
 class LeaguesController < ApplicationController
   def index
-    # fill tables
-    openliga = OpenligaParser.new
-    openliga.parse_openliga
+    @sports_id = params[:sports_id]
+    @avail_leagues = OpenligaSoapService.new.get_avail_leagues_by_sports(@sports_id)
+
     # get table-data and publish it in instance-variables
-    @leagues = League.all
     @league_goals = LeagueGoal.all
   end
 
   def create
-    puts 'create called'
+    puts 'create for ' + params[:league_shortcut] + ' / ' + params[:league_saison]
+    OpenligaParser.new.parse_openliga(params[:league_shortcut], params[:league_saison])
   end
 
   private

@@ -1,18 +1,33 @@
-<h1>Wir haben OpenLiga-Daten zu folgenden Ligen:</h1>
+<h1>Dafür gibt es u.a. folgende Ligen auf openliga.db:</h1>
 
 <table>
   <tr>
     <th>Liga-Id</th>
     <th>Liga-Name</th>
+    <th>Saison</th>
+    <th>Status</th>
     <th>geschossene Tore</th>
   </tr>
 
-  <% @leagues.sort.each do |l| %>
-    <tr>
-      <td><%= l.league_id %></td>
-      <td><%= l.league_name %></td>
-      <td><%= @league_goals.select('goal_id').where(league_id: l.league_id).count %></td>
-      <td><%= button_to 'Details', {:controller => 'leagues', :action => 'create'} %></td>
-    </tr>
+  <% @avail_leagues.each do |l| %>
+      <% if l[:league_shortcut] == 'bl1' %>
+        <tr>
+          <td><%= l[:league_id] %></td>
+          <td><%= l[:league_name] %></td>
+          <td><%= l[:league_saison] %></td>
+          <td>
+            <%= League.exists?(league_id: l[:league_id]) ? 'Daten vorhanden' : 'Daten nicht vorhanden' %>
+          </td>
+          <td>
+            <%= League.exists?(league_id: l[:league_id]) ?
+                    @league_goals.select('goal_id').where(league_id: l[:league_id]).count : 'n.a.' %>
+          </td>
+          <% if !League.exists?(league_id: l[:league_id]) %>
+            <td><%= button_to 'Daten laden', action: 'create',
+                    :league_shortcut => l[:league_shortcut],
+                              :league_saison => l[:league_saison] %></td>
+          <% end %>
+        </tr>
+      <% end %>
   <% end %>
 </table>

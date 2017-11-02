@@ -2,11 +2,9 @@ require 'net/http'
 require 'json'
 
 class OpenligaParser
-  attr_reader :parsed_result
-
-  # @return [json-parsed openliga-data]
-  def parse_openliga
-    net_response = Net::HTTP.get(URI('https://www.openligadb.de/api/getmatchdata/bl1/'))
+  # @param [Object] league_shortcut
+  def parse_openliga(league_shortcut, league_saison)
+    net_response = Net::HTTP.get(URI("https://www.openligadb.de/api/getmatchdata/#{league_shortcut}/#{league_saison}"))
     @parsed_result = JSON.parse(net_response)
     fill_league_table
     fill_group_table
