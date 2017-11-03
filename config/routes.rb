@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'karte/index'
+
   resources :leagues, only: [:index, :create]
 
   get 'leagues/index'
