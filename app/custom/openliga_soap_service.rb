@@ -1,6 +1,7 @@
 class OpenligaSoapService
   def get_avail_sports
     response = client.call(:get_avail_sports)
+    puts response.to_s
     response.to_hash[:get_avail_sports_response][:get_avail_sports_result][:sport]
   rescue Savon::SOAPFault => error
     fault = error.to_hash[:fault]

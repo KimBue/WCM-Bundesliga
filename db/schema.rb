@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20171029144952) do
   create_table "leagues", id: false, force: :cascade do |t|
     t.integer "league_id", null: false
     t.string "league_name"
+    t.string "league_shortcut"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["league_id"], name: "index_leagues_on_league_id", unique: true

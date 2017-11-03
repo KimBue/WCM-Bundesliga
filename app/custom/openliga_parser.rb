@@ -6,7 +6,7 @@ class OpenligaParser
   def parse_openliga(league_shortcut, league_saison)
     net_response = Net::HTTP.get(URI("https://www.openligadb.de/api/getmatchdata/#{league_shortcut}/#{league_saison}"))
     @parsed_result = JSON.parse(net_response)
-    fill_league_table
+    fill_league_table(league_shortcut)
     fill_group_table
     fill_team_table
     fill_match_table
@@ -16,13 +16,14 @@ class OpenligaParser
 
   private
 
-  def fill_league_table
+  def fill_league_table(league_shortcut)
     @parsed_result.each do |m|
       next if (m['LeagueId']).nil?
       next if League.exists?(league_id: m['LeagueId'])
       league = League.new
       league.league_id = m['LeagueId']
       league.league_name = m['LeagueName']
+      league.league_shortcut = league_shortcut
       league.save
     end
   end
