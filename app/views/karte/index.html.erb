@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="jquery.tooltip.min.js"></script>
+  <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="text">
+  <h1>Bundesliga</h1>
+  <p>Wählen Sie ein Bundesland aus.</p>
+  <table id="lands">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Bundesland</th>
+      <th><input type="radio" id="peopleswitch" name="tabledata"><label for="peopleswitch">Mannschaften</label></th>
+      <th><input type="radio" id="moneyswitch" name="tabledata"><label for="moneyswitch">Spieler</label></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id='DE-BW'>
+      <td><input type="checkbox"></td>
+      <td>Baden-Württemberg</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-BY'>
+      <td><input type="checkbox"></td>
+      <td>Bayern</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-BE'>
+      <td><input type="checkbox"></td>
+      <td>Berlin</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-BB'>
+      <td><input type="checkbox"></td>
+      <td>Brandenburg</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-HB'>
+      <td><input type="checkbox"></td>
+      <td>Bremen</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-HH'>
+      <td><input type="checkbox"></td>
+      <td>Hamburg</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-HE'>
+      <td><input type="checkbox"></td>
+      <td>Hessen</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-MV'>
+      <td><input type="checkbox"></td>
+      <td>Mecklenburg-Vorpommern</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-NI'>
+      <td><input type="checkbox"></td>
+      <td>Niedersachsen</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-NW'>
+      <td><input type="checkbox"></td>
+      <td>Nordrhein-Westfalen</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-RP'>
+      <td><input type="checkbox"></td>
+      <td>Rheinland-Pfalz</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-SL'>
+      <td><input type="checkbox"></td>
+      <td>Saarland</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-SN'>
+      <td><input type="checkbox"></td>
+      <td>Sachsen</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-ST'>
+      <td><input type="checkbox"></td>
+      <td>Sachsen-Anhalt</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-SH'>
+      <td><input type="checkbox"></td>
+      <td>Schleswig-Holstein</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr id='DE-TH'>
+      <td><input type="checkbox"></td>
+      <td>Thüringen</td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    </tbody>
+  </table>
+  <p><button class="button">Information</button></p>
+</div>
+<figure id="imapc">
+  <object data= "/images/germanyHigh.svg" type="image/svg+xml" id="imap">
+    <p>Sie benutzen alte Brauser Version</p>
+  </object>
+  <figcaption></figcaption>
+</figure>
+<script src="karte.coffee"></script>
+</body>
+</html>

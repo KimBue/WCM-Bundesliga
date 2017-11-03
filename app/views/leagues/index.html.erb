@@ -23,7 +23,7 @@
                     @league_goals.select('goal_id').where(league_id: l[:league_id]).count : 'n.a.' %>
           </td>
           <% if !League.exists?(league_id: l[:league_id]) %>
-            <td><%= button_to 'Daten laden', action: 'create',
+            <td><%= button_to 'Daten nutzen', controller: 'karte', action: 'index',
                     :league_shortcut => l[:league_shortcut],
                               :league_saison => l[:league_saison] %></td>
           <% end %>
