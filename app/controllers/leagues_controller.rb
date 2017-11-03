@@ -8,8 +8,8 @@ class LeaguesController < ApplicationController
   end
 
   def create
-    puts 'create for ' + params[:league_shortcut] + ' / ' + params[:league_saison]
     OpenligaParser.new.parse_openliga(params[:league_shortcut], params[:league_saison])
+    redirect_to action: 'index', sports_id: params[:sports_id]
   end
 
   private
