@@ -51,5 +51,4 @@ build-iPhoneSimulator/
 .rvmrc
 
 # Do not push Database and Schema
-db/development.sqlite3
-db/schema.rb
+development.sqlite3
