@@ -1,21 +1,23 @@
 <h1>Wissens- und Content-Management</h1>
 <h2>Wähle die gewünschte Sportart</h2>
 
-<table>
+<table id="welcome_sports-table">
   <tr>
     <th>Sport-ID</th>
     <th>Bezeichnung</th>
   </tr>
   <% @avail_sports.each do |s| %>
       <tr>
-        <% if s[:sports_id] == 1.to_s %>
-          <td><%= s[:sports_id] %></td>
-          <td>
+        <td><%= s[:sports_id] %></td>
+        <td>
+          <% if s[:sports_id] == 1.to_s %>
             <%= link_to s[:sports_name].to_s, {:controller => 'leagues',
-                                                 :sports_id => s[:sports_id],
-                                                 :sports_name => s[:sports_name]} %>
-          </td>
-        <% end %>
+                                             :sports_id => s[:sports_id],
+                                             :sports_name => s[:sports_name]} %>
+          <% else %>
+            <%= s[:sports_name] %>
+          <% end %>
+        </td>
       </tr>
   <% end %>
 </table>
