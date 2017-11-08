@@ -1,40 +1,45 @@
-<h1>Dafür gibt es u.a. folgende Ligen auf openliga.db:</h1>
+<% if @openligaReachable %>
+    <h1>Dafür gibt es u.a. folgende Ligen auf openliga.db:</h1>
+    <table id="leagues_leagues-table">
+      <tr>
+        <th>Liga-Id</th>
+        <th>Liga-Name</th>
+        <th>Saison</th>
+        <th>geschossene Tore</th>
+      </tr>
 
-<table id="leagues_leagues-table">
-  <tr>
-    <th>Liga-Id</th>
-    <th>Liga-Name</th>
-    <th>Saison</th>
-    <th>geschossene Tore</th>
-  </tr>
-
-  <% @avail_leagues.each do |l| %>
-      <% if l[:league_shortcut] == 'bl1' %>
-          <tr>
-            <td><%= l[:league_id] %></td>
-            <td><%= l[:league_name] %></td>
-            <td><%= l[:league_saison] %></td>
-            <% if League.exists?(league_id: l[:league_id]) %>
-              <td>
-                <%= @league_goals.select('goal_id').where(league_id: l[:league_id]).count %>
-              </td>
-              <td><%= button_to 'zur Karte', controller: 'karte',
-                                  :league_shortcut => l[:league_shortcut],
-                                  :league_saison => l[:league_saison] %>
-              </td>
-            <% else %>
-              <td> n.a. </td>
-              <td><%= button_to 'Laden', action: 'create',
-                                  :sports_id => @sports_id,
-                                  :league_shortcut => l[:league_shortcut],
-                                  :league_saison => l[:league_saison] %>
-              </td>
-            <% end %>
-          </tr>
+      <% @avail_leagues.each do |l| %>
+          <% if l[:league_shortcut] == 'bl1' %>
+              <tr>
+                <td><%= l[:league_id] %></td>
+                <td><%= l[:league_name] %></td>
+                <td><%= l[:league_saison] %></td>
+                <% if League.exists?(league_id: l[:league_id]) %>
+                    <td>
+                      <%= @league_goals.select('goal_id').where(league_id: l[:league_id]).count %>
+                    </td>
+                    <td><%= button_to 'zur Karte', controller: 'karte',
+                                      :league_shortcut => l[:league_shortcut],
+                                      :league_saison => l[:league_saison] %>
+                    </td>
+                <% else %>
+                    <td> n.a. </td>
+                    <td><%= button_to 'Laden', action: 'create',
+                                      :sports_id => @sports_id,
+                                      :league_shortcut => l[:league_shortcut],
+                                      :league_saison => l[:league_saison] %>
+                    </td>
+                <% end %>
+              </tr>
+          <% end %>
       <% end %>
-  <% end %>
-</table>
+    </table>
 
-<p>
-  <%= link_to 'zurück zur Sport-Auswahl' , welcome_index_path %>
-</p>
+    <p>
+      <%= link_to 'zurück zur Sport-Auswahl' , welcome_index_path %>
+    </p>
+<% else %>
+    <h2>Leider ist unsere Online-Ressouce im Moment nicht erreichbar.</h2>
+<% end %>
+
+

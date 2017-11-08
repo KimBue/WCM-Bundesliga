@@ -1,23 +1,27 @@
 <h1>Wissens- und Content-Management</h1>
-<h2>Wähle die gewünschte Sportart</h2>
 
-<table id="welcome_sports-table">
-  <tr>
-    <th>Sport-ID</th>
-    <th>Bezeichnung</th>
-  </tr>
-  <% @avail_sports.each do |s| %>
+<% if @openligaReachable %>
+    <h2>Wähle die gewünschte Sportart</h2>
+    <table id="welcome_sports-table">
       <tr>
-        <td><%= s[:sports_id] %></td>
-        <td>
-          <% if s[:sports_id] == 1.to_s %>
-            <%= link_to s[:sports_name].to_s, {:controller => 'leagues',
-                                             :sports_id => s[:sports_id],
-                                             :sports_name => s[:sports_name]} %>
-          <% else %>
-            <%= s[:sports_name] %>
-          <% end %>
-        </td>
+        <th>Sport-ID</th>
+        <th>Bezeichnung</th>
       </tr>
-  <% end %>
-</table>
+      <% @avail_sports.each do |s| %>
+          <tr>
+            <td><%= s[:sports_id] %></td>
+            <td>
+              <% if s[:sports_id] == 1.to_s %>
+                  <%= link_to s[:sports_name].to_s, {:controller => 'leagues',
+                                                     :sports_id => s[:sports_id],
+                                                     :sports_name => s[:sports_name]} %>
+              <% else %>
+                  <%= s[:sports_name] %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+<% else %>
+    <h2>Leider ist unsere Online-Ressouce im Moment nicht erreichbar.</h2>
+<% end %>

@@ -1,7 +1,6 @@
 class OpenligaSoapService
   def get_avail_sports
     response = client.call(:get_avail_sports)
-    puts response.to_s
     response.to_hash[:get_avail_sports_response][:get_avail_sports_result][:sport]
   rescue Savon::SOAPFault => error
     fault = error.to_hash[:fault]
@@ -20,6 +19,8 @@ class OpenligaSoapService
   private
 
   def client
-    Savon.client(wsdl: 'https://www.openligadb.de/Webservices/Sportsdata.asmx?wsdl')
+    Savon.client(wsdl: 'https://www.openligadb.de/Webservices/Sportsdata.asmx?wsdl',
+      open_timeout: 10, # 10 sec timeout for open
+      read_timeout: 10) # 10 sec timeout for read
   end
 end
