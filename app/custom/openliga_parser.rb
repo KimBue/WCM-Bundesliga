@@ -128,6 +128,9 @@ class OpenligaParser
         goal.is_own_goal = m['Goals'][i]['IsOwnGoal']
         goal.is_penalty = m['Goals'][i]['IsPenalty']
         goal.match_id = m['MatchID']
+        #trage zu diesem Tor passenden Goalgetter in Spielertabelle
+
+        fill_goalgetters(m, goal, i )
         goal.save
         # join-table league-goal
         league_goal = LeagueGoal.new
@@ -195,4 +198,148 @@ class OpenligaParser
       match.save
     end
   end
+
+  def fill_goalgetters(match, goal, i)
+    #diese Funktion sollte aufgerufen werden, wenn ein neues Match eingelesen wird
+    # denn dann habe ich Zugriff auf Spielername UND Verein
+    # openligadb gibt Torschützen IDs, jedoch sid trotzde leider viele Dopplungen enthalten
+
+
+    if not Goalgetter.exists?(goalgetter_id: goal.goal_getter_id)
+      #die Spieler_id von openligadb ist noch nicht vergeben, wie sieht es mit de Namen aus?
+      #Todo schreibe da mal ne extra Funktion für, die mit Regex prüft, ob Name und Verein identisch sind, es gibt nämlich viele Duplikate in den openliga Daten
+
+      ein_spieler = Goalgetter.new
+      ein_spieler.goalgetter_id = goal.goal_getter_id
+      ein_spieler.name = goal.goal_getter_name
+      #um den Verein herauszufinden, muss ich schauen, von welchem Team das Tor geschossen wurde
+      # dafür muss ich schauen, wie der Spielstad vor dem Tor war
+
+      #erstes Tor?
+      if i ==0
+        if goal.score_team1 ==1
+          ein_spieler.team_id =  match['Team1']['TeamId']
+        else
+          ein_spieler.team_id = match['Team2']['TeamId']
+        end
+      else
+
+        pre_goal = match['Goals'][i-1]
+        if pre_goal['ScoreTeam1'] ==goal.score_team1
+          ein_spieler.team_id = match['Team2']['TeamId']
+        else
+          ein_spieler.team_id =  match['Team1']['TeamId']
+        end
+      end
+      puts 'Spielername: ' + ein_spieler.name
+      wikiID = get_spieler_WikiId(ein_spieler.name, ein_spieler.team_id)
+      if not wikiID == '-1'
+        ein_spieler.wikidata_id = wikiID
+      end
+      ein_spieler.save
+
+
+    end
+
+
+
+  end
+
+  def get_spieler_WikiId(name, team_id)
+    #Falls vor und Nachname in umgekehrter Reihenfolge auftreten, müssen die für Wikidata umgedreht werden
+    if name.include? ","
+      splittet = name.split(",")
+      name = ""
+      splittet.each do |sp|
+        name = sp.strip + " " + name
+      end
+      name = name.strip
+      name.slice! ","
+
+    end
+
+    #Falls Punkt Abkürzung
+    if name.include? "."
+      splittet = name.split(".")
+
+      if splittet.length == 2
+        name = splittet[1]
+        name.slice! "."
+        name = name.strip
+        vorname_first_char = splittet[0]
+      end
+    end
+    name = name.strip
+    sparql = SPARQL::Client.new("https://query.wikidata.org/sparql")
+    wikidata_verein = Team.find(team_id).team_wikiId
+    name_reg = make_diacritic_insensitive(name)
+    query= sparql.query("SELECT ?item ?itemLabel WHERE {  ?item wdt:P106 wd:Q937857. ?item wdt:P54 wd:#{wikidata_verein}. ?item rdfs:label ?itemLabel.FILTER((LANG(?itemLabel)) = \"en\")FILTER(REGEX(?itemLabel, \"(#{name_reg})$*\"))}")
+    wikiIDs = []
+    puts "SELECT ?item ?itemLabel WHERE {  ?item wdt:P106 wd:Q937857. ?item wdt:P54 wd:#{wikidata_verein}. ?item rdfs:label ?itemLabel.FILTER((LANG(?itemLabel)) = \"en\")FILTER(REGEX(?itemLabel, \"(#{name_reg})$*\"))}"
+
+    query.each do |p|
+      puts 'Hier sind wir: Jetzt echt:  '
+      uri = p['item'].to_s
+      puts p.to_s
+      urisplit = uri.split("/")
+      wikiIDs.push urisplit[urisplit.length -  1 ]
+      if not vorname_first_char == nil
+        if not vorname_first_char == p['itemLabel'].to_s.scan(/./)[0]
+          puts "Obacht, der Vorname scheint nicht zu korrespondieren"
+          puts p['itemLabel']
+        end
+      end
+    end
+    if wikiIDs.length == 1
+      return wikiIDs[0]
+    else
+      puts 'Achtung, zu viele oder zu wenige Goalgetter gefunden: ' +  wikiIDs.to_s
+      puts name + " " + team_id.to_s
+    end
+
+  end
+
+
+  def make_diacritic_insensitive(regex)
+    regex_array = regex.scan(/./)
+    regex_array.each_with_index do |char, i|
+      if char == 'e'
+        regex_array[i] = "(e|é|è|ê|ë)"
+      end
+      if char =='E'
+        regex_array[i] = "(E|É|È|Ê)"
+      end
+      if char == 'C'
+        regex_array[i] = "(C|Ç|Č)"
+      end
+      if char == 'c'
+        regex_array[i]= "(c|ç|č|ć)"
+      end
+      if char == "g"
+        regex_array[i] = "(g|ğ)"
+      end
+      if char == 'i'
+        regex_array[i] = '(i|í|ì|î|ï)'
+      end
+      if char == 'L'
+        regex_array[i] = '(L|Ł)'
+      end
+      if char == 's'
+        regex_array[i] = '(s|š)'
+      end
+      if char == 'A'
+        regex_array[i] = '(A|Á|Ä)'
+      end
+      if char == 'a'
+        regex_array[i] = '(a|á|à|â)'
+      end
+      if char == 'o'
+        regex_array[i]= '(o|ô|ó)'
+      end
+
+
+    end
+    return regex_array.join("")
+  end
+
 end
