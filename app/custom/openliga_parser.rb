@@ -1,5 +1,7 @@
 require 'net/http'
 require 'json'
+require 'wikidata'
+require 'sparql/client'
 
 class OpenligaParser
   # @param [Object] league_shortcut
@@ -57,6 +59,10 @@ class OpenligaParser
         team1.team_name = m['Team1']['TeamName']
         team1.short_name = m['Team1']['ShortName']
         team1.team_icon_url = m['Team1']['TeamIconUrl']
+        team1_wikiId = Wikidata::Item.search m['Team1']['TeamName']
+        if not team1_wikiId == nil
+          team1.team_wikiId = team1_wikiId.results[0].id
+        end
         team1.save
       end
       next if (begin
@@ -70,6 +76,10 @@ class OpenligaParser
       team2.team_name = m['Team2']['TeamName']
       team2.short_name = m['Team2']['ShortName']
       team2.team_icon_url = m['Team2']['TeamIconUrl']
+      team2_wikiId = Wikidata::Item.search m['Team2']['TeamName']
+      if not team2_wikiId == nil
+        team2.team_wikiId = team2_wikiId.results[0].id
+      end
       team2.save
     end
   end
