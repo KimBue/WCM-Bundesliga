@@ -5,6 +5,7 @@ class CreateTeams < ActiveRecord::Migration[5.1]
       t.string :team_name
       t.string :short_name
       t.string :team_icon_url
+      t.string :team_wikiId
 
       t.timestamps
     end
