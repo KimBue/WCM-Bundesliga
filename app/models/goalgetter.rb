@@ -1,0 +1,2 @@
+class Goalgetter < ApplicationRecord
+end
