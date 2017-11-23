@@ -129,8 +129,11 @@ class OpenligaParser
         goal.is_penalty = m['Goals'][i]['IsPenalty']
         goal.match_id = m['MatchID']
         #trage zu diesem Tor passenden Goalgetter in Spielertabelle
-
-        fill_goalgetters(m, goal, i )
+        if  not goal.is_own_goal
+         fill_goalgetters(m, goal, i )
+        else
+          puts 'Eigentor: ' + goal.goal_getter_name + ' hat ei Eigentor erziehlt '
+        end
         goal.save
         # join-table league-goal
         league_goal = LeagueGoal.new
