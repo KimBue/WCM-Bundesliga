@@ -1,13 +1,13 @@
 <h1>Wissens- und Content-Management</h1>
 
 <% if @openligaReachable %>
-    <h2>Wähle die gewünschte Sportart</h2>
-    <table id="welcome_sports-table">
+    <h2>Wähle die gewünschte Sportart (Quelle: www.openligadb.de)</h2>
+    <table id="welcome_sports-table_online">
       <tr>
         <th>Sport-ID</th>
         <th>Bezeichnung</th>
       </tr>
-      <% @avail_sports.each do |s| %>
+      <% @avail_sports_online.each do |s| %>
           <tr>
             <td><%= s[:sports_id] %></td>
             <td>
@@ -23,5 +23,23 @@
       <% end %>
     </table>
 <% else %>
-    <h2>Leider ist unsere Online-Ressouce im Moment nicht erreichbar.</h2>
+    <h2>Leider ist unsere Online-Ressouce www.openligadb.de im Moment nicht erreichbar.
+      Prüfe ggf. deine Netzwerkverbindung. Folgende Daten sind lokal verfügbar:</h2>
+    <table id="welcome_sports-table_local">
+      <tr>
+        <th>Sport-ID</th>
+      </tr>
+      <% @avail_sports_local.each do |s| %>
+          <tr>
+            <td>
+              <% if s[:sports_id] == 1 %>
+                  <%= link_to s[:sports_id].to_s + ' - Fußball', {:controller => 'leagues',
+                                                     :sports_id => s[:sports_id]} %>
+              <% else %>
+                  <%= s[:sports_id] %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
 <% end %>

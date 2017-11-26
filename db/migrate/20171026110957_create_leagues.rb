@@ -4,6 +4,8 @@ class CreateLeagues < ActiveRecord::Migration[5.1]
       t.integer :league_id, null: false
       t.string :league_name
       t.string :league_shortcut
+      t.integer :sports_id
+      t.string :sports_name
 
       t.timestamps
     end

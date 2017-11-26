@@ -5,10 +5,11 @@ require 'sparql/client'
 
 class OpenligaParser
   # @param [Object] league_shortcut
-  def parse_openliga(league_shortcut, league_saison)
+  def parse_openliga(sports_id, sports_name,
+                     league_shortcut, league_saison)
     net_response = Net::HTTP.get(URI("https://www.openligadb.de/api/getmatchdata/#{league_shortcut}/#{league_saison}"))
     @parsed_result = JSON.parse(net_response)
-    fill_league_table(league_shortcut)
+    fill_league_table(sports_id, sports_name, league_shortcut)
     fill_group_table
     fill_team_table
     fill_match_table
@@ -18,7 +19,7 @@ class OpenligaParser
 
   private
 
-  def fill_league_table(league_shortcut)
+  def fill_league_table(league_shortcut, sports_id, sports_name)
     @parsed_result.each do |m|
       next if (m['LeagueId']).nil?
       next if League.exists?(league_id: m['LeagueId'])
@@ -26,6 +27,8 @@ class OpenligaParser
       league.league_id = m['LeagueId']
       league.league_name = m['LeagueName']
       league.league_shortcut = league_shortcut
+      league.sports_id = sports_id
+      league.sports_name = sports_name
       league.save
     end
   end
