@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171029144952) do
+ActiveRecord::Schema.define(version: 20171119175200) do
+
+  create_table "goalgetters", force: :cascade do |t|
+    t.integer "goalgetter_id"
+    t.string "name"
+    t.string "wikidata_id"
+    t.integer "birthplace_id"
+    t.integer "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "goals", id: false, force: :cascade do |t|
     t.integer "goal_id", null: false
@@ -97,6 +107,7 @@ ActiveRecord::Schema.define(version: 20171029144952) do
     t.string "team_name"
     t.string "short_name"
     t.string "team_icon_url"
+    t.string "team_wikiId"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_teams_on_team_id", unique: true
