@@ -295,11 +295,44 @@ class OpenligaParser
     end
     if wikiIDs.length == 1
       return wikiIDs[0]
-    else
+    else if wikiIDs.length == 0
+          #es wurde kein Spieler gefunden, schauen wir mal, ob wir nur mit dem Nachnamen einen Spieler finden
+           name_split = name.split(" ")
+           if name_split.length > 1
+             puts 'Nur Nachname ' + name
+             name_reg = make_diacritic_insensitive(name_split[name_split.length - 1])
+             query= sparql.query("SELECT ?item ?itemLabel WHERE {  ?item wdt:P106 wd:Q937857. ?item wdt:P54 wd:#{wikidata_verein}. ?item rdfs:label ?itemLabel.FILTER((LANG(?itemLabel)) = \"en\")FILTER(REGEX(?itemLabel, \"(#{name_reg})$*\"))}")
+             wikiID_nur_nachname = []
+             puts "SELECT ?item ?itemLabel WHERE {  ?item wdt:P106 wd:Q937857. ?item wdt:P54 wd:#{wikidata_verein}. ?item rdfs:label ?itemLabel.FILTER((LANG(?itemLabel)) = \"en\")FILTER(REGEX(?itemLabel, \"(#{name_reg})$*\"))}"
+
+             query.each do |p|
+               puts 'Hier sind wir: Jetzt echt:  '
+               uri = p['item'].to_s
+               puts p.to_s
+               urisplit = uri.split("/")
+               wikiID_nur_nachname.push urisplit[urisplit.length -  1 ]
+               if not vorname_first_char == nil
+                 if not vorname_first_char == p['itemLabel'].to_s.scan(/./)[0]
+                   puts "Obacht, der Vorname scheint nicht zu korrespondieren"
+                   puts p['itemLabel']
+                 end
+               end
+             end
+             if wikiID_nur_nachname.length == 1
+               return wikiIDs[0]
+             end
+           end
+         else
       puts 'Achtung, zu viele oder zu wenige Goalgetter gefunden: ' +  wikiIDs.to_s
       puts name + " " + team_id.to_s
-    end
 
+    end
+    end
+  end
+
+  def fill_places(player_wiki_id)
+    results =Wikidata::Item.find player_wiki_id
+    puts results
   end
 
 
@@ -338,6 +371,9 @@ class OpenligaParser
       end
       if char == 'o'
         regex_array[i]= '(o|ô|ó)'
+      end
+      if char == 'n'
+        regex_array[i] = '(n|ņ)'
       end
 
 
