@@ -17,7 +17,7 @@ class OpenligaParser
     fill_goal_table
   end
 
-  private
+  #private
 
   def fill_league_table(league_shortcut, sports_id, sports_name)
     @parsed_result.each do |m|
@@ -335,7 +335,23 @@ class OpenligaParser
 
   def fill_places(player_wiki_id)
     results =Wikidata::Item.find player_wiki_id
-    puts results
+    wiki_place = results.properties('P19').first
+
+    if  not Birthplace.exists?(wiki_id:wiki_place.id)
+      #Birtplace in der Tabelle anlegen
+      place = Birthplace.new
+      place.name = wiki_place.title
+      place.wiki_id = wiki_place.id
+      place.district_wiki_id = wiki_place.properties('P131').first.id
+
+      #ToDo fill district table
+
+      place.population = wiki_place.properties('P1082').first.amount
+
+
+      place.save
+    end
+    return wiki_place.id
   end
 
 
