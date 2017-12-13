@@ -1,0 +1,2 @@
+class Birthplace < ApplicationRecord
+end
