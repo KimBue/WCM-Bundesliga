@@ -21,7 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 
 #Wikidata und co
 gem 'sparql-client'
-gem 'wikidata-client', '~> 0.0.10'
+gem 'wikidata-client', '~> 0.0.12'
 #Hashie, wegen der blöden Fehlermeldungen
 gem 'hashie', '~> 3.4.6'
 
