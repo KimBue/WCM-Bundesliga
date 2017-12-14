@@ -241,6 +241,10 @@ class OpenligaParser
       wikiID = get_spieler_WikiId(ein_spieler.name, ein_spieler.team_id)
       if not wikiID == '-1'
         ein_spieler.wikidata_id = wikiID
+
+        spieler_Wikidata =Wikidata::Item.find ein_spieler.wikidata_id
+        wiki_place = spieler_Wikidata.properties('P19').first
+        fill_places(wiki_place)
       end
       ein_spieler.save
 
@@ -333,20 +337,30 @@ class OpenligaParser
     end
   end
 
-  def fill_places(player_wiki_id)
-    results =Wikidata::Item.find player_wiki_id
-    wiki_place = results.properties('P19').first
+  #results =Wikidata::Item.find player_wiki_id
+  #wiki_place = results.properties('P19').first
+  def fill_places(wiki_place)
+    puts wiki_place.title
 
     if  not Birthplace.exists?(wiki_id:wiki_place.id)
       #Birtplace in der Tabelle anlegen
       place = Birthplace.new
       place.name = wiki_place.title
       place.wiki_id = wiki_place.id
-      place.district_wiki_id = wiki_place.properties('P131').first.id
+      district = wiki_place.properties('P131').first
+      if not district  == nil
+        place.district_wiki_id =district.id
+        #der district muss auch in die Tabele eingefügt werden, das kann rekursiv geschenen
+        # Die Abbruchbedingung ist die if not district == nill oben
+        fill_places(district)
+      end
 
-      #ToDo fill district table
 
-      place.population = wiki_place.properties('P1082').first.amount
+      population =  wiki_place.property('P1082')
+      if not population == nil
+        place.population = population.amount
+      end
+
 
 
       place.save
