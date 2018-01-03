@@ -17,6 +17,7 @@ class OpenligaParser
     fill_goal_table
   end
 
+
   #private
 
   def fill_league_table(league_shortcut, sports_id, sports_name)
@@ -244,7 +245,7 @@ class OpenligaParser
 
         spieler_Wikidata =Wikidata::Item.find ein_spieler.wikidata_id
         wiki_place = spieler_Wikidata.properties('P19').first
-        fill_places(wiki_place)
+        ein_spieler.birthplace_id = fill_places(wiki_place)
       end
       ein_spieler.save
 
@@ -337,8 +338,8 @@ class OpenligaParser
     end
   end
 
-  #results =Wikidata::Item.find player_wiki_id
-  #wiki_place = results.properties('P19').first
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          #results =Wikidata::Item.find player_wiki_id
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          #wiki_place = results.properties('P19').first
   def fill_places(wiki_place)
     puts wiki_place.title
 
