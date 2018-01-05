@@ -3,8 +3,14 @@
 <svg version="1.1"
 	 id="Layer_1" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%"
-	 height="100%" viewBox="0 0 9463.301 12526" enable-background="new 0 0 9463.301 12526" xml:space="preserve">
-<g id="Karte">
+	 xmlns:amcharts="http://amcharts.com/ammap"
+	 xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+	 height="100%"
+	 viewBox="0 0 9463.301 12526"
+	 enable-background="new 0 0 9463.301 12526"
+	 xml:space="preserve">
+<amcharts:ammap projection="mercator" leftLongitude="5.865010" topLatitude="55.057722" rightLongitude="15.043380" bottomLatitude="47.269133"></amcharts:ammap>
+	<g id="Karte">
 	<g id="Landkreise">
 		<g id="Q1205" title="Thueringen" class="Bundesland">
 			<polygon id="polygon839" title="" class="Landkreis"
