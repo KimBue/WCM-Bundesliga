@@ -1,136 +1,282 @@
 
+
+
 <!DOCTYPE html>
 
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bundesliga</title>
   <script src="http://code.jquery.com/jquery-latest.js"></script>
-  <script src="jquery.tooltip.min.js"></script>
-  <link href="style.css" rel="stylesheet">
+  <script src="/javascript/jquery.tooltip.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="/stylesheet/style.css" rel="stylesheet">
 </head>
 
 <body>
-<div id="text">
-  <h1>Bundesliga</h1>
-  <p>Wählen Sie ein Bundesland aus.</p>
-  <table id="lands">
-    <thead>
-    <tr>
-      <th></th>
-      <th>Bundesland</th>
-      <th><input type="radio" id="peopleswitch" name="tabledata"><label for="peopleswitch">Mannschaften</label></th>
-      <th><input type="radio" id="moneyswitch" name="tabledata"><label for="moneyswitch">Spieler</label></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr id='DE-BW'>
-      <td><input type="checkbox"></td>
-      <td>Baden-Württemberg</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-BY'>
-      <td><input type="checkbox"></td>
-      <td>Bayern</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-BE'>
-      <td><input type="checkbox"></td>
-      <td>Berlin</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-BB'>
-      <td><input type="checkbox"></td>
-      <td>Brandenburg</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-HB'>
-      <td><input type="checkbox"></td>
-      <td>Bremen</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-HH'>
-      <td><input type="checkbox"></td>
-      <td>Hamburg</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-HE'>
-      <td><input type="checkbox"></td>
-      <td>Hessen</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-MV'>
-      <td><input type="checkbox"></td>
-      <td>Mecklenburg-Vorpommern</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-NI'>
-      <td><input type="checkbox"></td>
-      <td>Niedersachsen</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-NW'>
-      <td><input type="checkbox"></td>
-      <td>Nordrhein-Westfalen</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-RP'>
-      <td><input type="checkbox"></td>
-      <td>Rheinland-Pfalz</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-SL'>
-      <td><input type="checkbox"></td>
-      <td>Saarland</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-SN'>
-      <td><input type="checkbox"></td>
-      <td>Sachsen</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-ST'>
-      <td><input type="checkbox"></td>
-      <td>Sachsen-Anhalt</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-SH'>
-      <td><input type="checkbox"></td>
-      <td>Schleswig-Holstein</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr id='DE-TH'>
-      <td><input type="checkbox"></td>
-      <td>Thüringen</td>
-      <td></td>
-      <td></td>
-    </tr>
+<div class="main_container" style="margin-top:150px;">
+  <div id="text">
+    <h1>Bundesliga</h1>
+    <p>Wählen Sie ein Bundesland aus.</p>
+    <table id = "landkreise_table">
+      <thead>
+        <tr>
+          <th>
+            <select id="filterText_landkreise" style="display: inline-block" >
+		    <option value="Sachsen" selected> Sachsen </option>
+		    <option value='Baden-Württemberg'>Baden-Württemberg</option>
+		    <option value='Bayern'>Bayern</option>
+		    <option value='Berlin'>Berlin</option>
+		    <option value='Brandenburg'>Brandenburg</option>
+		    <option value='Bremen'>Bremen</option>
+		    <option value='Hamburg'>Hamburg</option>
+		    <option value='Hessen'>Hessen</option>
+		    <option value='Mecklenburg-Vorpommern'>Mecklenburg-Vorpommern</option>
+		    <option value='Niedersachsen'>Niedersachsen</option>
+		    <option value='Nordrhein-Westfalen'>Nordrhein-Westfalen</option>
+		    <option value='Rheinland-Pfalz'>Rheinland-Pfalz</option>
+               <option value='Saarland'>Saarland</option>
+               <option value='Sachsen-Anhalt'>Sachsen-Anhalt</option>
+		    <option value='Schleswig-Holstein'>Schleswig-Holstein</option>
+		    <option value='Thüringen'> Thüringen</option>
+		    <option value='alle'>Alle</option>
+             </select>
+          </th>
+          <th data-type="number">Tore<input type="radio" id="tore_switch_landkreise"  name="tabledata_landkreise">Zeigen</th>
+          <th data-type="number">Rote Karten<input type="radio" id="rote_karten_switch_landkreise" name="tabledata_landkreise"><label for="peopleswitch">Zeigen</label></th>
+          <th data-type="number">Gelbe Karten<input type="radio" id="gelbe_karten_switch_landkreise" name="tabledata_landkreise">Zeigen</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr id='sachsen_'>
+        <td>Bautzen</td>
+        <td>185</td>
+        <td>30</td>
+        <td>57</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Chemnitz</td>
+        <td>174</td>
+        <td>39</td>
+        <td>67</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Dresden</td>
+        <td>164</td>
+        <td>54</td>
+        <td>78</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Erzgebirgskreis</td>
+        <td>134</td>
+        <td>45</td>
+        <td>57</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Görlitz</td>
+        <td>193</td>
+        <td>67</td>
+        <td>58</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Leipzig-Stadt</td>
+        <td>67</td>
+        <td>65</td>
+        <td>39</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Leipzig-Landkreis</td>
+        <td>86</td>
+        <td>48</td>
+        <td>87</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Mittelsachsen</td>
+        <td>137</td>
+        <td>67</td>
+        <td>73</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Nordsachsen</td>
+        <td>121</td>
+        <td>105</td>
+        <td>86</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Sächsische Schweiz-Osterzgebirge</td>
+        <td>54</td>
+        <td>76</td>
+        <td>33</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Vogtlandkreis</td>
+        <td>85</td>
+        <td>64</td>
+        <td>87</td>
+      </tr>
+      <tr id='sachsen_'>
+        <td>Zwickau</td>
+        <td>78</td>
+        <td>39</td>
+        <td>87</td>
+      </tr>
+      </tbody>
+    </table>
 
-    </tbody>
-  </table>
-  <p><button class="button">Information</button></p>
+
+    <table id="lands" class="">
+      <thead>
+      <tr>
+        <th>
+          <select id="filterText" style="display:inline-block" onmousedown="this.value='';" onchange="myFunction(this.value)">
+            <option disabled selected>Bundesland</option>
+            <option value='Baden-Württemberg'>Baden-Württemberg</option>
+            <option value='Bayern'>Bayern</option>
+            <option value='Berlin'>Berlin</option>
+            <option value='Brandenburg'>Brandenburg</option>
+            <option value='Bremen'>Bremen</option>
+            <option value='Hamburg'>Hamburg</option>
+            <option value='Hessen'>Hessen</option>
+            <option value='Mecklenburg-Vorpommern'>Mecklenburg-Vorpommern</option>
+            <option value='Niedersachsen'>Niedersachsen</option>
+            <option value='Nordrhein-Westfalen'>Nordrhein-Westfalen</option>
+            <option value='Rheinland-Pfalz'>Rheinland-Pfalz</option>
+            <option value='Saarland'>Saarland</option>
+            <option value='Sachsen'>Sachsen</option>
+            <option value='Sachsen-Anhalt'>Sachsen-Anhalt</option>
+            <option value='Schleswig-Holstein'>Schleswig-Holstein</option>
+            <option value='Thüringen'> Thüringen</option>
+            <option value='alle'>Alle</option>
+          </select>
+        </th>
+        <th data-type="number">Tore<input type="radio" id="tore_switch"  name="tabledata">Zeigen</th>
+        <th data-type="number">Rote Karten<input type="radio" id="rote_karten_switch" name="tabledata"><label for="peopleswitch">Zeigen</label></th>
+        <th data-type="number">Gelbe Karten<input type="radio" id="gelbe_karten_switch" name="tabledata">Zeigen</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr id='DE-BW'>
+        <td>Baden-Württemberg</td>
+        <td>185</td>
+        <td>30</td>
+        <td>57</td>
+      </tr>
+      <tr id='DE-BY'>
+        <td>Bayern</td>
+        <td>170</td>
+        <td>29</td>
+        <td>64</td>
+      </tr>
+      <tr id='DE-BE'>
+        <td>Berlin</td>
+        <td>130</td>
+        <td>20</td>
+        <td>61</td>
+      </tr>
+      <tr id='DE-BB'>
+        <td>Brandenburg</td>
+        <td>98</td>
+        <td>36</td>
+        <td>54</td>
+      </tr>
+      <tr id='DE-HB'>
+        <td>Bremen</td>
+        <td>65</td>
+        <td>21</td>
+        <td>76</td>
+      </tr>
+      <tr id='DE-HH'>
+        <td>Hamburg</td>
+        <td>73</td>
+        <td>89</td>
+        <td>43</td>
+      </tr>
+      <tr id='DE-HE'>
+        <td>Hessen</td>
+        <td>82</td>
+        <td>39</td>
+        <td>68</td>
+      </tr>
+      <tr id='DE-MV'>
+        <td>Mecklenburg-Vorpommern</td>
+        <td>97</td>
+        <td>18</td>
+        <td>130</td>
+      </tr>
+      <tr id='DE-NI'>
+        <td>Niedersachsen</td>
+        <td>76</td>
+        <td>58</td>
+        <td>114</td>
+      </tr>
+      <tr id='DE-NW'>
+        <td>Nordrhein-Westfalen</td>
+        <td>47</td>
+        <td>67</td>
+        <td>132</td>
+      </tr>
+      <tr id='DE-RP'>
+        <td>Rheinland-Pfalz</td>
+        <td>89</td>
+        <td>44</td>
+        <td>111</td>
+      </tr>
+      <tr id='DE-SL'>
+        <td>Saarland</td>
+        <td>60</td>
+        <td>118</td>
+        <td>18</td>
+      <tr id='DE-SN'>
+        <td>Sachsen</td>
+        <td>77</td>
+        <td>134</td>
+        <td>104</td>
+      </tr>
+      <tr id='DE-ST'>
+        <td>Sachsen-Anhalt</td>
+        <td>49</td>
+        <td>143</td>
+        <td>44</td>
+      </tr>
+      <tr id='DE-SH'>
+        <td>Schleswig-Holstein</td>
+        <td>152</td>
+        <td>86</td>
+        <td>27</td>
+      </tr>
+      <tr id='DE-TH'>
+        <td>Thüringen</td>
+        <td>94</td>
+        <td>47</td>
+        <td>43</td>
+      </tr>
+
+      </tbody>
+    </table>
+    <br>
+    <input id="show_land_kreise" type="radio" name="land_data"> Landkreise<br>
+    <input id="show_bundeslander" type="radio" name="land_data" checked disabled> Bundeslander<br>
+  </div>
+  <figure id="figure_bundesland">
+    <object data="/images/germanyHigh.svg" type="image/svg+xml" id="bundesland">
+      <p>Sie benutzen alte Brauser Version</p>
+    </object>
+    <figcaption></figcaption>
+  </figure>
+  <figure id="figure_landkreise">
+    <object data="/images/germanyLandkreise.svg" type="image/svg+xml" id="landkreise">
+      <p>Sie benutzen alte Brauser Version</p>
+    </object>
+  </figure>
+
 </div>
-<figure id="imapc">
-  <object data= "/images/germanyHigh.svg" type="image/svg+xml" id="imap">
-    <p>Sie benutzen alte Brauser Version</p>
-  </object>
-  <figcaption></figcaption>
-</figure>
-<script src="karte.coffee"></script>
+<script src="/javascript/kreis_table_sorting.js"></script>
+<script  src="/javascript/main_script.js"></script>
+<script  src="/javascript/land_table_sorting.js"></script>
+
+
 </body>
 </html>
+
